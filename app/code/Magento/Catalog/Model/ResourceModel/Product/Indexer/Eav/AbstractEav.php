@@ -206,6 +206,8 @@ abstract class AbstractEav extends \Magento\Catalog\Model\ResourceModel\Product\
             ['i' => $idxTable],
             'l.child_id = i.entity_id AND cs.store_id = i.store_id',
             []
+        )-> join ( // this helps to show only those attribute filters, which are related to products, assigned to a particular website
+            ['web'=>'catalog_product_website'], 'web.product_id = i.entity_id and web.website_id=cs.website_id', [] 
         )->group(
             ['parent_id', 'i.attribute_id', 'i.store_id', 'i.value', 'l.child_id']
         )->columns(
